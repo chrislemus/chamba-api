@@ -2,6 +2,7 @@ class ApplicationController < ActionController::API
 before_action :authorized
 
   def encode_token(payload) #{ user_id: 2 }
+    payload[:exp] = (60).minutes.from_now.to_i
     JWT.encode(payload, Rails.application.encrypted("config/credentials.yml.enc").jwt_key) #issue a token, store payload in token
   end
 
@@ -35,6 +36,6 @@ before_action :authorized
   end
 
   def authorized
-    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+    render json: { errors: ['Please log in'] }, status: :unauthorized unless logged_in?
   end
 end

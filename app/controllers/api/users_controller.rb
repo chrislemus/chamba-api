@@ -13,13 +13,13 @@ class Api::UsersController < ApplicationController
       user_data = @user.as_json( except: :password_digest)
       render json: { user: user_data, token: @token }, status: :created
     else
-      render json: { error: 'failed to create user' }, status: :not_acceptable
+      render json: { errors: @user.errors.full_messages}, status: :not_acceptable
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :avatar, :blocked, :email, :password)
+    params.require(:user).permit(:first_name, :last_name, :avatar, :blocked, :email, :password, :password_confirmation)
   end
 end
