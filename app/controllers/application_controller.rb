@@ -2,8 +2,9 @@ class ApplicationController < ActionController::API
 before_action :authorized
 
   def encode_token(payload) #{ user_id: 2 }
-    payload[:exp] = (60).minutes.from_now.to_i
-    JWT.encode(payload, Rails.application.encrypted("config/credentials.yml.enc").jwt_key) #issue a token, store payload in token
+    payload[:exp] = (1).minutes.from_now.to_i
+    key = Rails.application.encrypted("config/credentials.yml.enc").jwt_key
+    JWT.encode(payload, key) #issue a token, store payload in token
   end
 
   def auth_header
@@ -13,9 +14,9 @@ before_action :authorized
   def decoded_token
     if auth_header()
       token = auth_header.split(' ')[1] #[Bearer, <token>]
-
+      key = Rails.application.encrypted("config/credentials.yml.enc").jwt_key
       begin
-        JWT.decode(token, Rails.application.encrypted("config/credentials.yml.enc").jwt_key, true, algorithm: 'HS256')
+        JWT.decode(token, key, true, algorithm: 'HS256')
         # JWT.decode => [{ "user_id"=>"2" }, { "alg"=>"HS256" }]
       rescue JWT::DecodeError
         nil
