@@ -13,13 +13,15 @@ class Api::UsersController < ApplicationController
       user_data = @user.as_json( except: :password_digest)
       render json: { user: user_data, token: @token }, status: :created
     else
-      render json: { errors: @user.errors.full_messages}, status: :not_acceptable
+      # errors array is filter to prevent duplicate errors. eg. password confimation error is returned twice
+      errors = @user.errors.full_messages.uniq
+      render json: { errors: errors}, status: :not_acceptable
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :avatar, :blocked, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :avatar, :blocked, :email, :email_confirmation, :password, :password_confirmation)
   end
 end
