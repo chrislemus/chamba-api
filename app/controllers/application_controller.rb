@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
 before_action :authorized
 
   def encode_token(payload) #{ user_id: 2 }
-    payload[:exp] = (1).minutes.from_now.to_i
+    payload[:exp] = (15).days.from_now.to_i
     key = Rails.application.encrypted("config/credentials.yml.enc").jwt_key
     JWT.encode(payload, key) #issue a token, store payload in token
   end
