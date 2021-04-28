@@ -1,11 +1,17 @@
 class ApplicationController < ActionController::API
-before_action :authorized
+
+
+  before_action :snake_case_params  
+  before_action :authorized
+
 
   def encode_token(payload) #{ user_id: 2 }
     payload[:exp] = (15).days.from_now.to_i
     key = Rails.application.encrypted("config/credentials.yml.enc").jwt_key
     JWT.encode(payload, key) #issue a token, store payload in token
   end
+
+
 
   def auth_header
     request.headers['Authorization'] # Bearer <token>
@@ -39,4 +45,11 @@ before_action :authorized
   def authorized
     render json: { errors: ['Please log in'] }, status: :unauthorized unless logged_in?
   end
+
+  private
+  # snake_case the query params and all other params
+  def snake_case_params
+    request.parameters.deep_transform_keys!(&:underscore)
+  end
+  
 end

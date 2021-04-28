@@ -7,44 +7,6 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    #create business & check if valid OR return error
-    
-    # if @business.valid?
-    #   #gotta create default role table
-      
-    #   params[:user][:role] = owner
-    # else
-    #   errors = @business.errors.full_messages.uniq
-    #   return render json: { errors: errors}, status: :not_acceptable
-    # end
-
-
-    # if params[:user] && params[:business]
-    #   params[:user][:is_owner] = true
-    # end
-
-    
-    # @owner_role = nil
-    # @user.valid?
-    # errors = @user.errors.to_hash(full_messages = true).without(:role).values
-
-    # @business = Business.new(business_params)
-    # if !@business.valid?
-    #   errors << @business.errors.full_messages.map { |err| 'Business ' + err }
-    # end
-
-    # if @user.valid? && @business.valid?
-    #   @owner_role = Role.new(business: @business) 
-    #   if @owner_role.valid?
-    #     @user.role = @owner_role
-    #   else
-    #      errors << @owner_role.errors.full_messages
-    #   end
-    # end
- 
-    # errors = errors.flatten.uniq if errors.length > 0
-     
-
     @user = User.new(user_params)
     @business = Business.new(name: @user[:business_name], owner: @user)
     if @user.valid? && @business.valid? 
