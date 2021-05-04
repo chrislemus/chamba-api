@@ -8,8 +8,8 @@ class CreateCustomers < ActiveRecord::Migration[6.1]
       t.string :email
       t.string :phone_mobile
       t.string :phone_home
-      t.string :address_1
-      t.string :address_2
+      t.string :address1
+      t.string :address2
       t.string :city
       t.string :state
       t.integer :zip_code
