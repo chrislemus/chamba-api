@@ -6,15 +6,28 @@ class Api::CustomersController < ApplicationController
   end
 
   def update
-    customer = Customer.find(params[:id])
-    customer.update(customer_params)
-    render json: { customers: @customers}, status: :accepted
+    @customer = Customer.find(params[:id])
+    if @customer
+      @customer.update(customer_params)
+      if @customer.valid?
+        render json: { customer: @customer}, status: :accepted
+      else
+        errors = @customer.errors.full_messages.uniq
+        render json: { errors: errors}, status: :not_acceptable
+      end
+    else
+      render status: :not_found
+    end
+    
   end
 
   def show
-
     @customer = Customer.find(params[:id])
-    render json: { customer: @customer}, status: :ok
+    if @customer
+      render json: { customer: @customer}, status: :ok
+    else
+      render status: :not_found
+    end
   end
 
   def create
