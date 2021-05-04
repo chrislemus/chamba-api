@@ -20,14 +20,14 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
     t.index ["owner_id"], name: "index_businesses_on_owner_id"
   end
 
-  create_table "clients", force: :cascade do |t|
+  create_table "customers", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "company_name"
     t.string "avatar"
     t.string "email"
-    t.string "mobile_phone"
-    t.string "home_phone"
+    t.string "phone_mobile"
+    t.string "phone_home"
     t.string "address_1"
     t.string "address_2"
     t.string "city"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
     t.integer "business_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["business_id"], name: "index_clients_on_business_id"
+    t.index ["business_id"], name: "index_customers_on_business_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,5 +53,5 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
   end
 
   add_foreign_key "businesses", "users", column: "owner_id"
-  add_foreign_key "clients", "businesses"
+  add_foreign_key "customers", "businesses"
 end
