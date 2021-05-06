@@ -1,3 +1,5 @@
+require 'json'
+
 class ApplicationController < ActionController::API
 
 
@@ -9,6 +11,11 @@ class ApplicationController < ActionController::API
     payload[:exp] = (15).days.from_now.to_i
     key = Rails.application.encrypted("config/credentials.yml.enc").jwt_key
     JWT.encode(payload, key) #issue a token, store payload in token
+  end
+
+  def to_camel_case(hash)
+    camelize_lower = Proc.new {|a| a.camelize(:lower)}
+    hash.to_json.deep_transform_keys!(&camelize_lower) 
   end
 
   def auth_header

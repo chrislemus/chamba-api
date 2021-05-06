@@ -2,7 +2,7 @@ class Api::CustomersController < ApplicationController
 
   def index
     query = params[:query] || ''
-    limit = get_params(:limit, true) || 20 
+    limit = get_params(:limit, true) || 10 
     page = get_params(:page, true) || 1
     order = params[:order] === 'asc' ? 'asc' : 'desc'
 
@@ -13,10 +13,14 @@ class Api::CustomersController < ApplicationController
       results: count,
       limit: limit,
       page: page,
-      total_pages: (count.to_f/limit.to_f).ceil()
+      total_pages: (count.to_f/limit.to_f).ceil(),
+      test_key: {
+        first_name: 'hi'
+      }
     }
-    
-    render json: { query_data: query_data, customers: customers }, status: :ok
+
+    response = { query_data: query_data, customers: customers }.deep_transform_keys { |key| key.to_s.camelize(:lower) }
+    render json: response, status: :ok
   end
 
 
