@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
   end
 
   create_table "customers", force: :cascade do |t|
+    t.string "full_name"
     t.string "first_name"
     t.string "last_name"
     t.string "company_name"
@@ -28,8 +29,8 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
     t.string "email"
     t.string "phone_mobile"
     t.string "phone_home"
-    t.string "address_1"
-    t.string "address_2"
+    t.string "address1"
+    t.string "address2"
     t.string "city"
     t.string "state"
     t.integer "zip_code"

@@ -11,10 +11,15 @@ class ApplicationController < ActionController::API
     JWT.encode(payload, key) #issue a token, store payload in token
   end
 
-
-
   def auth_header
     request.headers['Authorization'] # Bearer <token>
+  end
+
+  def get_params(parameter_symbol, is_number)
+    parameter = params[parameter_symbol]
+    parameter = false if parameter && is_number && !parameter.match?(/^\d+$/) 
+    parameter = parameter.to_i if parameter && is_number
+    parameter
   end
 
   def decoded_token

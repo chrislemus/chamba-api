@@ -11,7 +11,7 @@ class Api::AuthController < ApplicationController
       user_data = @user.as_json(except: :password_digest)
       render json: { user: user_data, token: token }, status: :accepted
     else
-      render json: { errors: ['Invalid email or password'] }, status: :unauthorized
+      render json: { validationErrors: ['Invalid email or password'] }, status: :unauthorized
     end
   end
 

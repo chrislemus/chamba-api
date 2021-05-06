@@ -1,9 +1,25 @@
 class Api::CustomersController < ApplicationController
 
   def index
-    @customers = Customer.all
-    render json: { customers: @customers}, status: :ok
+    query = params[:query] || ''
+    limit = get_params(:limit, true) || 20 
+    page = get_params(:page, true) || 1
+    order = params[:order] === 'asc' ? 'asc' : 'desc'
+
+    customers = Customer.where("full_name LIKE ?", "%#{query}%").limit(limit).offset(limit * (page - 1)).order("created_at #{order}")
+    count = customers.except(:limit, :offset).count
+
+    query_data = {
+      results: count,
+      limit: limit,
+      page: page,
+      total_pages: (count.to_f/limit.to_f).ceil()
+    }
+    
+    render json: { query_data: query_data, customers: customers }, status: :ok
   end
+
+
 
   def update
     @customer = Customer.find(params[:id])
@@ -12,8 +28,8 @@ class Api::CustomersController < ApplicationController
       if @customer.valid?
         render json: { customer: @customer}, status: :accepted
       else
-        errors = @customer.errors.full_messages.uniq
-        render json: { errors: errors}, status: :not_acceptable
+        validationErrors = @customer.errors.full_messages.uniq
+        render json: { validationErrors: validationErrors}, status: :not_acceptable
       end
     else
       render status: :not_found
@@ -39,8 +55,8 @@ class Api::CustomersController < ApplicationController
     if @customer.valid?
       render json: { customer: @customer}, status: :created
     else
-      errors = @customer.errors.full_messages.uniq
-      render json: { errors: errors}, status: :not_acceptable
+      validationErrors = @customer.errors.full_messages.uniq
+      render json: { validationErrors: validationErrors}, status: :not_acceptable
     end
   end
 

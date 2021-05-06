@@ -16,8 +16,8 @@ class Api::UsersController < ApplicationController
       user_data = @user.as_json( except: :password_digest)
       render json: { user: user_data, token: @token }, status: :created
     else
-      errors = @user.errors.full_messages.uniq
-      render json: { errors: errors}, status: :not_acceptable
+      validationErrors = @user.errors.full_messages.uniq
+      render json: { validationErrors: validationErrors}, status: :not_acceptable
     end
   end
 
