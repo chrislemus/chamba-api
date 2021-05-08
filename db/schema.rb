@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_195038) do
+ActiveRecord::Schema.define(version: 2021_05_06_153214) do
 
   create_table "businesses", force: :cascade do |t|
     t.string "name"
@@ -41,6 +41,23 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
     t.index ["business_id"], name: "index_customers_on_business_id"
   end
 
+  create_table "invoice_line_items", force: :cascade do |t|
+    t.text "description"
+    t.integer "price"
+    t.integer "invoice_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invoice_id"], name: "index_invoice_line_items_on_invoice_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.datetime "paid_date"
+    t.integer "customer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_invoices_on_customer_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -55,4 +72,6 @@ ActiveRecord::Schema.define(version: 2021_04_27_195038) do
 
   add_foreign_key "businesses", "users", column: "owner_id"
   add_foreign_key "customers", "businesses"
+  add_foreign_key "invoice_line_items", "invoices"
+  add_foreign_key "invoices", "customers"
 end

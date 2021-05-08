@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [:create]
     resources :customers, only: [:create, :index, :show, :update]
+    resources :invoices, only: [:create, :index, :show, :update]
     post '/login', to: 'auth#create'
     get '/profile', to: 'users#profile'
   end

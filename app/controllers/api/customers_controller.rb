@@ -6,19 +6,17 @@ class Api::CustomersController < ApplicationController
     page = get_params(:page, true) || 1
     order = params[:order] === 'asc' ? 'asc' : 'desc'
 
-    customers = Customer.where("full_name LIKE ?", "%#{query}%").limit(limit).offset(limit * (page - 1)).order("created_at #{order}")
+    customers = Customer.where(business: current_user.business)
+    .where("full_name LIKE ?", "%#{query}%").limit(limit).offset(limit * (page - 1)).order("created_at #{order}")
     count = customers.except(:limit, :offset).count
-
+    
     query_data = {
       results: count,
       limit: limit,
       page: page,
       total_pages: (count.to_f/limit.to_f).ceil(),
-      test_key: {
-        first_name: 'hi'
-      }
     }
-
+    
     response = { query_data: query_data, customers: customers }.deep_transform_keys { |key| key.to_s.camelize(:lower) }
     render json: response, status: :ok
   end
