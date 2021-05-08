@@ -50,6 +50,14 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def current_business
+    if current_user
+      current_user.business || nil 
+    else
+      nil
+    end
+  end
+
   def logged_in?
     !!current_user
   end

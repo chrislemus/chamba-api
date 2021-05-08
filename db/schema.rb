@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
 
   create_table "invoice_line_items", force: :cascade do |t|
     t.text "description"
-    t.integer "price"
+    t.decimal "price"
     t.integer "invoice_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
 
   create_table "invoices", force: :cascade do |t|
     t.datetime "paid_date"
+    t.datetime "due_date"
+    t.datetime "canceled_date"
     t.integer "customer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
