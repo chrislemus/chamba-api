@@ -9,13 +9,33 @@ class Customer < ApplicationRecord
     super
   end
 
-  # def self.order_if_order(order)
-  #   if order
-  #     order = (%w[asc desc] & [order.downcase])[0] || 'asc'
-  #     self.order("created_at #{order}")
-  #   else
-  #     self
-  #   end
-  # end
+
+  # .each { |invoice|  invoice.invoice_line_items.destroy_all}
+  def invoices_overview
+    paid_invoices_total = 0
+    unpaid_invoices_total = 0
+    self.invoices.each { |invoice| 
+      invoice_total = invoice.total
+      if invoice.status === 'paid'
+        paid_invoices_total += invoice_total.to_f
+      elsif invoice.status === 'pending' || invoice.status === 'overdue'
+        unpaid_invoices_total += invoice_total.to_f
+      end
+      # byebug
+
+      # invoice_total = invoice.invoice_line_items.sum(:price)
+    }
+      return {
+        paid_invoices_total: paid_invoices_total,
+        unpaid_invoices_total: unpaid_invoices_total
+      }
+    
+  end
+  # 'pending', overdue
+  def paid_invoices_total
+    
+  end
+
+
 
 end

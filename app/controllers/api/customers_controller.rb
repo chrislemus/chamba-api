@@ -53,9 +53,9 @@ class Api::CustomersController < ApplicationController
   end
 
   def show
-    @customer = Customer.find(params[:id])
-    if @customer
-      render json: { customer: @customer}, status: :ok
+    customer = Customer.find(params[:id])
+    if customer
+      render json: { customer: customer.as_json( methods: [:invoices_overview ])}, status: :ok
     else
       render status: :not_found
     end

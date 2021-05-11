@@ -8,7 +8,7 @@ class Invoice < ApplicationRecord
 
 
   def total
-    self.invoice_line_items.sum(:price)
+    self.invoice_line_items.sum(:price).to_f
   end
   def business_name
     self.business.name
