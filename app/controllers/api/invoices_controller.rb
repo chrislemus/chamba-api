@@ -26,7 +26,18 @@ class Api::InvoicesController < ApplicationController
 
   end
 
-    def update
+  def destroy
+    invoice = Invoice.find_by(id: params[:id]) 
+    if invoice && invoice.customer.business === current_business
+      invoice.invoice_line_items.destroy_all
+      invoice.destroy
+      render  status: :accepted
+    else
+      render json: { validationErrors: validationErrors}, status: :not_acceptable
+    end
+  end
+
+  def update
     invoice = Invoice.find_by(id: params[:id]) 
     if invoice && invoice.customer.business === current_business
       invoice.update(invoice_params)
