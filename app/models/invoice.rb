@@ -10,6 +10,9 @@ class Invoice < ApplicationRecord
   def total
     self.invoice_line_items.sum(:price)
   end
+  def business_name
+    self.business.name
+  end
 
   def customer_full_name
     self.customer.full_name

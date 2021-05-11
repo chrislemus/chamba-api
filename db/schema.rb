@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
   end
 
   create_table "invoice_line_items", force: :cascade do |t|
+    t.string "name"
     t.text "description"
     t.decimal "price"
     t.integer "invoice_id", null: false
