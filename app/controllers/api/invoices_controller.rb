@@ -67,7 +67,7 @@ class Api::InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:customer_id,:paid_date,:due_date, :canceled_date, invoice_line_items_attributes: [:name, :description, :price] )
+    params.require(:invoice).permit(:customer_id,:paid_date,:due_date, :canceled_date, invoice_line_items_attributes: [:id, :name, :description, :price, :_destroy] )
   end
 
 end

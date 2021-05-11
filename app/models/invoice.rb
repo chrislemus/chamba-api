@@ -3,7 +3,7 @@ class Invoice < ApplicationRecord
   has_many :invoice_line_items
   delegate :business, to: :customer
 
-  accepts_nested_attributes_for :invoice_line_items
+  accepts_nested_attributes_for :invoice_line_items, allow_destroy: true
   # accept_method_attributes :invoice_line_item
 
 
