@@ -33,7 +33,7 @@ class Api::InvoicesController < ApplicationController
       invoice.destroy
       render  status: :accepted
     else
-      render json: { validationErrors: validationErrors}, status: :not_acceptable
+      render status: :not_acceptable
     end
   end
 

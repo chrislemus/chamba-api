@@ -39,6 +39,19 @@ class Api::CustomersController < ApplicationController
     
   end
 
+
+  def destroy
+    customer = Customer.find_by(id: params[:id]) 
+    if customer && customer.business === current_business
+      customer.invoices.each { |invoice|  invoice.invoice_line_items.destroy_all}
+      customer.invoices.destroy_all
+      customer.destroy
+      render  status: :accepted
+    else
+      render  status: :not_acceptable
+    end
+  end
+
   def show
     @customer = Customer.find(params[:id])
     if @customer
