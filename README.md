@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Getting started
 
-Things you may want to cover:
+- install gems with `bundle`
+- run migration a with `rails db:migrate`
+- seed database with `rails db:seed`
+- `rails s` will start the api
 
-* Ruby version
+## Overview
 
-* System dependencies
+All request made to api will need a auth bearer token, except when creating a new account. App uses JWT to authenticate user.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Front-end repo can be found [here](https://github.com/chrislemus/service-field-crm)

@@ -10,7 +10,6 @@ class Customer < ApplicationRecord
   end
 
 
-  # .each { |invoice|  invoice.invoice_line_items.destroy_all}
   def invoices_overview
     paid_invoices_total = 0
     unpaid_invoices_total = 0
@@ -21,21 +20,11 @@ class Customer < ApplicationRecord
       elsif invoice.status === 'pending' || invoice.status === 'overdue'
         unpaid_invoices_total += invoice_total.to_f
       end
-      # byebug
-
-      # invoice_total = invoice.invoice_line_items.sum(:price)
     }
       return {
         paid_invoices_total: paid_invoices_total,
         unpaid_invoices_total: unpaid_invoices_total
       }
-    
   end
-  # 'pending', overdue
-  def paid_invoices_total
-    
-  end
-
-
 
 end
