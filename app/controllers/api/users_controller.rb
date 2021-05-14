@@ -2,7 +2,7 @@ class Api::UsersController < ApplicationController
   skip_before_action :authorized, only: [:create]
 
   def profile
-    user_data = current_user.as_json( except: :password_digest)
+    user_data = current_user.as_json( except: :password_digest, methods: [:full_name ])
     render json: { user:  user_data}, status: :accepted
   end
 

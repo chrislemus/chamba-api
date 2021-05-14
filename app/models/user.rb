@@ -8,4 +8,10 @@ class User < ApplicationRecord
     message: "invalid email" }
   validates :password, confirmation: true, presence: true, format:{ with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}\z/,message: "password must contain minimum eight characters, at least one uppercase letter, one lowercase letter and one number"}
 
+  def full_name
+    full_name = ''
+    full_name = self.first_name unless self.first_name.empty?
+    full_name += " #{self.last_name }" unless self.last_name.empty?
+    full_name
+  end
 end
