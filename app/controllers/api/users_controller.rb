@@ -7,16 +7,16 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    @business = Business.new(name: @user[:business_name], owner: @user)
-    if @user.valid? && @business.valid? 
-      @user.save
+    user = User.new(user_params)
+    @business = Business.new(name: user[:business_name], owner: user)
+    if user.valid? && @business.valid? 
+      user.save
       @business.save
-      @token = encode_token({ user_id: @user.id })
-      user_data = @user.as_json( except: :password_digest)
+      @token = encode_token({ user_id: user.id })
+      user_data = user.as_json( except: :password_digest, methods: [:full_name ])
       render json: { user: user_data, token: @token }, status: :created
     else
-      validationErrors = @user.errors.full_messages.uniq
+      validationErrors = user.errors.full_messages.uniq
       render json: { validationErrors: validationErrors}, status: :not_acceptable
     end
   end
