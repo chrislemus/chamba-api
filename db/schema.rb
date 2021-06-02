@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2021_05_06_153214) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "businesses", force: :cascade do |t|
     t.string "name"
-    t.integer "owner_id", null: false
+    t.bigint "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["owner_id"], name: "index_businesses_on_owner_id"
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
     t.string "state"
     t.integer "zip_code"
     t.string "country"
-    t.integer "business_id", null: false
+    t.bigint "business_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["business_id"], name: "index_customers_on_business_id"
@@ -45,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
     t.string "name"
     t.text "description"
     t.decimal "price"
-    t.integer "invoice_id", null: false
+    t.bigint "invoice_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["invoice_id"], name: "index_invoice_line_items_on_invoice_id"
@@ -55,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
     t.datetime "paid_date"
     t.datetime "due_date"
     t.datetime "canceled_date"
-    t.integer "customer_id", null: false
+    t.bigint "customer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_invoices_on_customer_id"
