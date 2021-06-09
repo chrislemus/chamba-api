@@ -21,7 +21,7 @@ class Invoice < ApplicationRecord
   def status
     if self.paid_date
       'paid'
-    elsif self.canceled_date
+    elsif self.canceled
       'canceled'
     elsif self.due_date && Date.today > self.due_date 
       'overdue'
