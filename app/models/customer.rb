@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
 
   def save
     self.full_name = self.first_name unless self.first_name.empty?
-    self.full_name += " #{self.last_name }" unless self.last_name.empty?
+    self.full_name += " #{self.last_name }" unless self.last_name && self.last_name.empty?
     super
   end
 
