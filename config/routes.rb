@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :customers, only: [:create, :index, :show, :update, :destroy]
     resources :invoices, only: [:create, :index, :show, :update, :destroy]
+    resources :events, only: [:create, :index, :show, :update, :destroy]
     post '/login', to: 'auth#create'
     get '/profile', to: 'users#profile'
   end

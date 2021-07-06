@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_153214) do
+ActiveRecord::Schema.define(version: 2021_07_03_232835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,20 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["business_id"], name: "index_customers_on_business_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "location"
+    t.text "notes"
+    t.bigint "customer_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_events_on_customer_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "invoice_line_items", force: :cascade do |t|
@@ -78,6 +92,8 @@ ActiveRecord::Schema.define(version: 2021_05_06_153214) do
 
   add_foreign_key "businesses", "users", column: "owner_id"
   add_foreign_key "customers", "businesses"
+  add_foreign_key "events", "customers"
+  add_foreign_key "events", "users"
   add_foreign_key "invoice_line_items", "invoices"
   add_foreign_key "invoices", "customers"
 end

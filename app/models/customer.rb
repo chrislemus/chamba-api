@@ -2,6 +2,7 @@ class Customer < ApplicationRecord
   belongs_to :business
   validates :first_name, presence: true
   has_many :invoices
+  has_many :events
 
   def save
     self.full_name = self.first_name unless self.first_name.empty?

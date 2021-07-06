@@ -3,4 +3,5 @@ class Business < ApplicationRecord
   validates :name, presence: true
   has_many :customers
   has_many :invoices, through: :customers
+  has_many :events, through: :owner
 end

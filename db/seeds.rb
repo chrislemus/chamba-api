@@ -43,3 +43,59 @@ Customer.create([
     {first_name:"Matt",last_name:"Doeiss",company_name:"true moo LLC",avatar:"",email:"jonny@me.coms",phone_mobile:"919-995-9955",phone_home:"800-794-4672",address1:"4621 may dr",address2:"suite d",city:"Raleigh",state:"CO",zip_code:27604,country:"USA",business_id:1},
     {first_name:"Jay",last_name:"Doeiss",company_name:"true moo LLC",avatar:"",email:"jonny@me.coms",phone_mobile:"919-995-9955",phone_home:"800-794-4672",address1:"4621 may dr",address2:"suite d",city:"Raleigh",state:"CO",zip_code:27604,country:"USA",business_id:1},
 ])
+
+first_customer = Customer.find(1)
+
+Event.create([
+  {
+    title: 'Watercolor Landscape',
+    start_date: DateTime.new(2021, 6, 23, 9, 30),
+    end_date: DateTime.new(2021, 6, 23, 11, 30),
+    user:user,
+    customer: first_customer,
+    location: 'Zoom',
+    notes: 'Extra descriptive notes',
+  },
+  {
+    title: 'Monthly Planning',
+    start_date: DateTime.new(2021, 5, 28, 9, 30),
+    end_date: DateTime.new(2021, 5, 28, 11, 30),
+     user:user,
+    location: 'Zoom',
+    notes: 'Extra descriptive notes',
+  },
+  {
+    title: 'Recruiting students',
+    start_date: DateTime.new(2021, 6, 9, 12, 0),
+    end_date: DateTime.new(2021, 6, 9, 13, 0),
+     user:user,
+    customer: first_customer,
+    location: 'Zoom',
+    notes: 'Extra descriptive notes',
+  },
+  {
+    title: 'Oil Painting',
+    start_date: DateTime.new(2021, 6, 18, 14, 30),
+    end_date: DateTime.new(2021, 6, 18, 15, 30),
+     user:user,
+    location: 'Zoom',
+    notes: 'Extra descriptive notes',
+  },
+  {
+    title: 'Open Day',
+    start_date: DateTime.new(2021, 6, 20, 12, 0),
+    end_date: DateTime.new(2021, 6, 20, 13, 35),
+     user:user,
+    customer: first_customer,
+    location: 'Zoom',
+    notes: 'Extra descriptive notes',
+  },
+  {
+    title: 'Watercolor Workshop',
+    start_date: DateTime.new(2021, 6, 9, 11, 0),
+    end_date: DateTime.new(2021, 6, 9, 12, 0),
+     user:user,
+    location: 'Zoom',
+    notes: 'Extra descriptive notes',
+  },
+])
