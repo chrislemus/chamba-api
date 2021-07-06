@@ -1,16 +1,17 @@
 class Api::EventsController < ApplicationController
   def index
     if params[:date] && params[:days]
-      start_date = DateTime.parse( params[:date])
-      end_date = start_date + (params[:days] + 1).days
-      events = current_business.events.includes(:customer)
-      .where("start_date >= ? AND start_date <= ?", start_date, end_date).order("start_date asc")
+      start_date = DateTime.parse( params[:date]).beginning_of_day
+      end_date = start_date + (params[:days].to_i ).days
+      end_date = end_date.end_of_day
+      events = current_business.events.includes(:customer).where("start_date >= ? AND start_date <= ?", start_date, end_date).order("start_date asc")
+      
       response = { 
         events: events.as_json( except: :customer_id, include: [:customer]) 
       }.deep_transform_keys { |key| key.to_s.camelize(:lower) }
       render json: response, status: :ok
     else
-       render json: { error: '"start_date" must be a date string and "days" must be a integer representing the number of days of events requested'}, status: :not_acceptable
+       render json: { error: '"date" must be a date string and "days" must be a integer representing the number of days of events requested'}, status: :not_acceptable
     end
   end
 
