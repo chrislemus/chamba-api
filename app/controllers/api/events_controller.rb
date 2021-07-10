@@ -4,8 +4,8 @@ class Api::EventsController < ApplicationController
       start_date = DateTime.parse( params[:date]).beginning_of_day
       end_date = start_date + (params[:days].to_i ).days
       end_date = end_date.end_of_day
-      events = current_business.events.includes(:customer).where("start_date >= ? AND start_date <= ?", start_date, end_date).order("start_date asc")
-      
+      events_container = params[:customer_id] ? Customer.find(params[:customer_id]) : current_business
+      events = events_container.events.includes(:customer).where("start_date >= ? AND start_date <= ?", start_date, end_date).order("start_date asc")
       response = { 
         events: events.as_json( except: :customer_id, include: [:customer]) 
       }.deep_transform_keys { |key| key.to_s.camelize(:lower) }
@@ -57,7 +57,9 @@ class Api::EventsController < ApplicationController
   end
 
   def create
-    event = Event.create(event_params, user: current_user)
+    event = Event.new(event_params)
+    event.user = current_user
+    event.save
     if event.valid?
       render json: { event: event.as_json( except: :customer_id, include: [:customer])  }, status: :created
     else
@@ -69,7 +71,7 @@ class Api::EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :start_date, :end_date, :customer, :location, :notes )
+    params.require(:event).permit(:title, :start_date, :end_date, :customer_id, :location, :notes )
   end
 
 end

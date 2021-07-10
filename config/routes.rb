@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [:create]
     resources :customers, only: [:create, :index, :show, :update, :destroy]
+    resources :customers, only: [:index, :show] do
+      resources :events, only: [:index]
+    end
     resources :invoices, only: [:create, :index, :show, :update, :destroy]
     resources :events, only: [:create, :index, :show, :update, :destroy]
     post '/login', to: 'auth#create'
