@@ -6,6 +6,7 @@
 - run migration a with `rails db:migrate`
 - seed database with `rails db:seed`
 - `rails s` will start the api
+- `bin/rails server -p ${PORT:-5000} -e $RAILS_ENV` Heroku deploy command
 
 ## Overview
 
